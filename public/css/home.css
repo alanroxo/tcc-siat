@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Container que envolve sidebar e main-content */
+.container {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    background: url('../imagens/nuvem.jpg') no-repeat center center;
+    background-size: cover;
+    width: 80px;
+    padding: 20px 10px;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-right: 2px solid #ddd;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+.sidebar .icon-container {
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.sidebar .icon-container:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.sidebar img {
+    width: 28px;
+    height: 28px;
+}
+
+.sidebar .logout {
+    margin-top: auto;
+}
+
+/* Conteúdo principal */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.profile-section img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+.profile-section .email {
+    font-size: 16px;
+    color: #666;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+}
+
+.chart, .agenda {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ddd;
+}
+
+.chart {
+    flex: 2;
+}
+
+.agenda {
+    flex: 1;
+}
+
+.notices {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ddd;
+}
+
+#calendar {
+    height: 200px; /* compacto */
+    transition: height 0.4s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#calendar.expanded {
+    height: 500px; /* expandido */
+}
