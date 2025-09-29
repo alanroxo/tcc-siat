@@ -1,8 +1,0 @@
-<h1>Editar categoria</h1>
-<form action="/categorias/<%= categoria.id %>?_method=PUT" method="POST">
-    <div class="form-group">
-        <label for="nome">Categoria</label>
-        <input type="text" class="form-control" id="nome" name="nome" value="<%= categoria.nome %>" required>
-    </div>
-    <button type="submit" class="btn btn-warning">Salvar</button>
-</form>

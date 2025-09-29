@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Página Inicial</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="/css/home.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="icon-container" onclick="location.href='home.html'" title="Tela Inicial">
+        <img src="/imagens/inicial.png" alt="Tela Inicial" />
+      </div>
+      <div class="icon-container" onclick="location.href='ocorrencia.html'">
+        <img src="/imagens/ocorrencia.png" alt="Cadastrar Ocorrência" title="Cadastrar Ocorrência" />
+      </div>
+      <div class="icon-container" onclick="location.href='relatorios.html'">
+        <img src="/imagens/report.png" alt="Relatórios" title="Relatórios" />
+      </div>
+      <!-- link de admin será injetado aqui via JS (antes do logout) -->
+
+      <!-- Logout -->
+      <div class="icon-container logout" id="btnLogout" title="Sair">
+        <img src="/imagens/sair.png" alt="Sair" />
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <div>
+          <h1 id="greetingTitle">Olá!</h1>
+          <p class="subtitle" id="subGreeting"></p>
+        </div>
+      </header>
+
+      <!-- GRADE: gráfico | agenda -->
+      <section class="content">
+        <div class="card chart">
+          <div class="card-header"><h3>Gráfico de Cadastros</h3></div>
+          <div class="card-body">
+            <canvas id="chartCanvas"></canvas>
+          </div>
+        </div>
+
+        <div class="card agenda">
+          <div class="card-header"><h3>Agenda</h3></div>
+          <div class="card-body">
+            <div class="calendar">
+              <div class="calendar-header">
+                <button type="button" class="cal-prev" aria-label="Mês anterior">&#9664;</button>
+                <h2 id="month-year"></h2>
+                <button type="button" class="cal-next" aria-label="Próximo mês">&#9654;</button>
+              </div>
+              <table id="calendar-table"></table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card notices">
+        <div class="card-header"><h3>Avisos</h3></div>
+        <div class="card-body">
+          <ul class="notice-list">
+            <li>📌 Reunião com diretor marcada para <b>22/01/2025 às 14h</b>.</li>
+            <li>⚠️ Atualizar dados de cadastro até <b>18/01/2025</b>.</li>
+            <li>📊 Relatório mensal disponível na seção de Relatórios.</li>
+            <li>✅ Capacitação de conselheiros no dia <b>28/01/2025</b>.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modal: ocorrências do dia -->
+  <div id="dayModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close" id="dayModalClose" aria-label="Fechar">&times;</button>
+      <h3 id="dayModalTitle">Ocorrências</h3>
+      <ul id="dayModalList" class="day-list"></ul>
+    </div>
+  </div>
+
+  <!-- Modal: detalhes (admin consegue editar/deletar aqui) -->
+  <div id="viewModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close" id="viewModalClose" aria-label="Fechar">&times;</button>
+      <h3 id="viewModalTitle">Detalhes da Ocorrência</h3>
+
+      <div class="view-body">
+        <div><strong>ID:</strong> <span id="vId"></span></div>
+        <div><strong>Criança (ID):</strong> <span id="vCriancaId"></span></div>
+        <div><strong>Nome:</strong> <span id="vNome"></span></div>
+        <div><strong>Data:</strong> <span id="vData"></span></div>
+        <div><strong>Tipo:</strong> <span id="vTipo"></span></div>
+        <div><strong>Status:</strong> <span id="vStatus"></span></div>
+        <div><strong>Descrição:</strong></div>
+        <p id="vDescricao"></p>
+      </div>
+
+      <div class="view-actions" id="viewActions" style="display:none; gap:8px; margin-top:12px;">
+        <button type="button" class="btn" id="btnEdit">Editar</button>
+        <button type="button" class="btn" id="btnSave" style="display:none;">Salvar</button>
+        <button type="button" class="btn" id="btnCancel" style="display:none;">Cancelar</button>
+        <button type="button" class="btn danger" id="btnDelete">Deletar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/js/home.js"></script>
+
+  <!-- injeta link do painel admin se for administrador -->
+  <script>
+    (function () {
+      try {
+        const auth = JSON.parse(localStorage.getItem('siatAuth') || '{}');
+        if (auth?.role === 'administrador') {
+          const sb = document.querySelector('.sidebar');
+          if (sb && !document.getElementById('adminLink')) {
+            const el = document.createElement('div');
+            el.className = 'icon-container';
+            el.id = 'adminLink';
+            el.title = 'Painel do Administrador';
+            el.onclick = () => location.href = 'adm.html';
+            const img = document.createElement('img');
+            img.src = '/imagens/usua.png';
+            img.alt = 'Admin';
+            el.appendChild(img);
+            const logout = sb.querySelector('.logout');
+            sb.insertBefore(el, logout || null);
+          }
+        }
+      } catch {}
+    })();
+  </script>
+</body>
+</html>

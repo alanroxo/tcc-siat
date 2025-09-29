@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Relatórios</title>
+  <link rel="stylesheet" href="/css/relatorios.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="icon-container" onclick="location.href='home.html'">
+      <img src="/imagens/inicial.png" alt="Tela Inicial" title="Tela Inicial" />
+    </div>
+    <div class="icon-container" onclick="location.href='ocorrencia.html'">
+      <img src="/imagens/ocorrencia.png" alt="Cadastrar Ocorrência" title="Cadastrar Ocorrência" />
+    </div>
+    <div class="icon-container" onclick="location.href='relatorios.html'">
+      <img src="/imagens/report.png" alt="Relatórios" title="Relatórios" />
+    </div>
+
+    <!-- Logout FIXO no rodapé e funcional -->
+    <div class="icon-container logout" id="btnLogout" title="Sair" aria-label="Sair">
+      <img src="/imagens/sair.png" alt="Sair" />
+    </div>
+  </aside>
+
+  <main class="container">
+    <h1>Relatórios de Crianças</h1>
+
+    <div class="top-bar">
+      <div class="search-box">
+        <input type="text" id="pesquisa" placeholder="Pesquisar pelo nome..." oninput="pesquisarCadastro()" />
+      </div>
+
+      <!-- Visível para todos; regra de permissão está no backend -->
+      <button class="btn-add" id="btnAddCrianca">
+        <span class="btn-plus">+</span> Adicionar Criança
+      </button>
+    </div>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Data de Cadastro</th>
+            <th>Status</th>
+            <th>ID</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-relatorios"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modal de detalhes -->
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close" onclick="fecharModal()" aria-label="Fechar">&times;</button>
+      <div id="modal-detalhes"></div>
+    </div>
+  </div>
+
+  <!-- Modal com cadastro (iframe) - usado para ADICIONAR e EDITAR -->
+  <div id="cadastroModal" class="modal" aria-hidden="true">
+    <div class="modal-content modal-iframe">
+      <button class="close" id="closeCadastroModal" aria-label="Fechar">&times;</button>
+      <iframe id="cadastroFrame" title="Cadastro de Criança" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </div>
+  </div>
+
+  <script src="/js/relatorios.js"></script>
+  <script>
+    // controles do modal de cadastro/edição
+    const cadastroModal = document.getElementById('cadastroModal');
+    const cadastroFrame = document.getElementById('cadastroFrame');
+    const btnAdd = document.getElementById('btnAddCrianca');
+    const closeCadastroBtn = document.getElementById('closeCadastroModal');
+
+    function openCadastroModal(id) {
+      cadastroFrame.src = id
+        ? `cadastro.html?embed=1&id=${encodeURIComponent(id)}`
+        : 'cadastro.html?embed=1';
+      cadastroModal.style.display = 'flex';
+      cadastroModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCadastroModal() {
+      cadastroModal.style.display = 'none';
+      cadastroModal.setAttribute('aria-hidden', 'true');
+      cadastroFrame.src = 'about:blank';
+      document.body.style.overflow = '';
+    }
+
+    if (btnAdd) btnAdd.addEventListener('click', () => openCadastroModal());
+    closeCadastroBtn.addEventListener('click', closeCadastroModal);
+    cadastroModal.addEventListener('click', (e) => { if (e.target === cadastroModal) closeCadastroModal(); });
+
+    window.addEventListener('message', (ev) => {
+      if (ev?.data?.type === 'cadastro-salvo' || ev?.data?.type === 'cadastro-editado') {
+        closeCadastroModal();
+        location.reload();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && cadastroModal.style.display === 'flex') closeCadastroModal();
+    });
+
+    // expõe para o relatorios.js usar quando clicar em "Editar"
+    window.openCadastroModal = openCadastroModal;
+  </script>
+
+  <!-- injeta link do painel admin se for administrador -->
+  <script>
+    (function () {
+      try {
+        const auth = JSON.parse(localStorage.getItem('siatAuth') || '{}');
+        if (auth?.role === 'administrador') {
+          const sb = document.querySelector('.sidebar');
+          if (sb && !document.getElementById('adminLink')) {
+            const el = document.createElement('div');
+            el.className = 'icon-container';
+            el.id = 'adminLink';
+            el.title = 'Painel do Administrador';
+            el.onclick = () => location.href = 'adm.html';
+            const img = document.createElement('img');
+            img.src = '/imagens/usua.png';
+            img.alt = 'Admin';
+            el.appendChild(img);
+            const logout = sb.querySelector('.logout');
+            sb.insertBefore(el, logout || null);
+          }
+        }
+      } catch {}
+    })();
+  </script>
+</body>
+</html>

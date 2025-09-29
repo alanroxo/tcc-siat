@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - SIAT</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="left-section">
+      <h1>Bem-vindo ao SIAT - Sistema Integrado de Acompanhamento Tutelar</h1>
+    </div>
+
+    <div class="right-section">
+      <h2>Login</h2>
+
+      <form id="loginForm" autocomplete="on">
+        <label for="roleSelect" class="sr-only">Perfil</label>
+        <select id="roleSelect" required>
+          <option value="" disabled selected>Selecione seu perfil</option>
+          <option value="conselheiro">Conselheiro</option>
+          <option value="administrador">Administrador</option>
+        </select>
+
+        <label for="usernameField" class="sr-only">Usuário</label>
+        <input
+          id="usernameField"
+          type="text"
+          name="username"
+          placeholder="E-mail ou Nome de Usuário"
+          autocomplete="username"
+          required
+        />
+
+        <div class="password-container">
+          <label for="passwordField" class="sr-only">Senha</label>
+          <input
+            id="passwordField"
+            type="password"
+            placeholder="Senha"
+            autocomplete="current-password"
+            required
+          />
+          <span id="togglePassword" class="toggle-password">👁️</span>
+        </div>
+
+        <button type="submit" class="botao" id="btnLogin">Entrar</button>
+      </form>
+
+
+      <p id="loginMsg" class="login-msg" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

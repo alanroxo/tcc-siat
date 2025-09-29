@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel do Administrador - SIAT</title>
+  <link rel="stylesheet" href="/css/adm.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="icon-container" onclick="location.href='home.html'">
+          <img src="/imagens/inicial.png" alt="Tela Inicial" title="Tela Inicial" />
+        </div>
+        <div class="icon-container" onclick="location.href='ocorrencia.html'">
+          <img src="/imagens/ocorrencia.png" alt="Cadastrar Ocorrência" title="Cadastrar Ocorrência" />
+        </div>
+        <div class="icon-container" onclick="location.href='relatorios.html'">
+          <img src="/imagens/report.png" alt="Relatórios" title="Relatórios" />
+        </div>
+    
+        <!-- Logout FIXO no rodapé e funcional -->
+        <div class="icon-container logout" id="btnLogout" title="Sair" aria-label="Sair">
+          <img src="/imagens/sair.png" alt="Sair" />
+        </div>
+      </aside>
+
+    <!-- Conteúdo -->
+    <main class="main-content">
+      <div class="header">
+        <h1>Gerenciar Contas (Conselheiros)</h1>
+        <button id="btnNew" class="btn primary">+ Nova Conta</button>
+      </div>
+
+      <div class="chart">
+        <div class="card-header">
+          <h3>Lista de Conselheiros</h3>
+        </div>
+        <div class="card-body" style="overflow:auto;">
+          <div class="table-wrapper">
+            <table class="table" id="tblContas" style="width:100%; border-collapse:collapse;">
+              <thead>
+                <tr>
+                  <th style="text-align:left; padding:10px; border-bottom:1px solid #e5e5e5;">ID</th>
+                  <th style="text-align:left; padding:10px; border-bottom:1px solid #e5e5e5;">Nome</th>
+                  <th style="text-align:left; padding:10px; border-bottom:1px solid #e5e5e5;">Tipo</th>
+                  <th style="text-align:left; padding:10px; border-bottom:1px solid #e5e5e5;">Criado</th>
+                  <th style="text-align:left; padding:10px; border-bottom:1px solid #e5e5e5;">Atualizado</th>
+                  <th style="text-align:right; padding:10px; border-bottom:1px solid #e5e5e5;">Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyContas"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Criar/Editar -->
+  <div id="modalConta" class="modal" aria-hidden="true">
+    <div class="modal-content">
+      <button class="close" id="btnCloseModal" aria-label="Fechar">&times;</button>
+      <h3 id="modalTitle">Nova Conta</h3>
+
+      <div class="view-body" style="margin-top:12px;">
+        <div><strong>Nome:</strong><span style="flex:1"><input type="text" id="fNome" placeholder="Nome do conselheiro"></span></div>
+        <div><strong>Senha:</strong><span style="flex:1"><input type="text" id="fSenha" placeholder="Defina a senha"></span></div>
+        <div><strong>Tipo:</strong>
+          <span style="flex:1">
+            <select id="fTipo">
+              <option value="conselheiro">Conselheiro</option>
+              <option value="adm">Administrador</option>
+            </select>
+          </span>
+        </div>
+      </div>
+
+      <div class="view-actions">
+        <button class="btn success" id="btnSave">Salvar</button>
+        <button class="btn" id="btnCancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/adm.js"></script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro de Crianças - SIAT</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/cadastro.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/imask/6.4.2/imask.min.js"></script>
+
+  <script>
+    (function(){
+      const params = new URLSearchParams(location.search);
+      if (params.get('embed') === '1') {
+        document.documentElement.classList.add('is-embed');
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <aside class="sidebar">
+    <div class="icon-container" onclick="location.href='home.html'">
+      <img src="/imagens/inicial.png" alt="Tela Inicial" title="Tela Inicial" />
+    </div>
+    <div class="icon-container active" onclick="location.href='cadastro.html'">
+      <img src="/imagens/user.png" alt="Cadastrar Criança" title="Cadastrar Criança" />
+    </div>
+    <div class="icon-container" onclick="location.href='ocorrencia.html'">
+      <img src="/imagens/ocorrencia.png" alt="Cadastrar Ocorrência" title="Cadastrar Ocorrência" />
+    </div>
+    <div class="icon-container" onclick="location.href='relatorios.html'">
+      <img src="/imagens/report.png" alt="Relatórios" title="Relatórios" />
+    </div>
+    <div class="icon-container logout" onclick="location.href='login.html'">
+      <img src="/imagens/sair.png" alt="Sair" title="Sair" />
+    </div>
+  </aside>
+
+  <main class="content">
+    <form id="cadastroForm" class="card" novalidate>
+      <h1><i class="fa-solid fa-child-reaching"></i> Cadastro de Criança</h1>
+
+      <div class="stepper" aria-label="Etapas do cadastro">
+        <div class="stepper-item" data-step="1">
+          <div class="stepper-dot"><span>1</span></div>
+          <div class="stepper-label">Criança</div>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-item" data-step="2">
+          <div class="stepper-dot"><span>2</span></div>
+          <div class="stepper-label">Endereço</div>
+        </div>
+        <div class="stepper-line"></div>
+        <div class="stepper-item" data-step="3">
+          <div class="stepper-dot"><span>3</span></div>
+          <div class="stepper-label">Responsável</div>
+        </div>
+      </div>
+
+      <!-- ETAPA 1 -->
+      <section class="form-step" data-step="1">
+        <label for="nome">Nome Completo</label>
+        <input type="text" id="nome" name="nome" required />
+
+        <label for="data_nascimento">Data de Nascimento</label>
+        <input type="date" id="data_nascimento" name="data_nascimento" required />
+
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" name="cpf" />
+
+        <label for="genero">Gênero</label>
+        <select id="genero" name="genero" required>
+          <option value="" disabled selected>Selecione</option>
+          <option value="masculino">Masculino</option>
+          <option value="feminino">Feminino</option>
+          <option value="outros">Outro</option>
+        </select>
+
+        <label for="comorbidade">Comorbidade</label>
+        <select id="comorbidade" name="comorbidade" required>
+          <option value="nenhuma">Nenhuma</option>
+          <option value="asma">Asma</option>
+          <option value="diabetes">Diabetes</option>
+          <option value="hipertensao">Hipertensão</option>
+          <option value="outros">Outros</option>
+        </select>
+
+        <label for="escolaridade">Escolaridade</label>
+        <select id="escolaridade" name="escolaridade" required>
+          <option value="fundamental">Fundamental</option>
+          <option value="medio">Médio</option>
+          <option value="superior">Superior</option>
+        </select>
+
+        <label for="observacoes_crianca">Observações</label>
+        <textarea id="observacoes_crianca" name="observacoes_crianca"></textarea>
+      </section>
+
+      <!-- ETAPA 2 -->
+      <section class="form-step" data-step="2" hidden>
+        <h2><i class="fa-solid fa-location-dot"></i> Endereço</h2>
+
+        <label for="uf">UF</label>
+        <select id="uf" name="uf" required>
+          <option value="" disabled selected>Selecione a UF</option>
+        </select>
+
+        <label for="cidade">Cidade</label>
+        <select id="cidade" name="cidade" required>
+          <option value="" disabled selected>Selecione a cidade</option>
+        </select>
+
+        <label for="bairro">Bairro</label>
+        <input type="text" id="bairro" name="bairro" required />
+
+        <label for="rua">Rua</label>
+        <input type="text" id="rua" name="rua" required />
+
+        <label for="numero">Número</label>
+        <input type="number" id="numero" name="numero" />
+      </section>
+
+      <!-- ETAPA 3 -->
+      <section class="form-step" data-step="3" hidden>
+        <h2><i class="fa-solid fa-user-shield"></i> Responsável</h2>
+
+        <label for="nome_responsavel">Nome Completo</label>
+        <input type="text" id="nome_responsavel" name="nome_responsavel" required />
+
+        <label for="data_nascimento_responsavel">Data de Nascimento</label>
+        <input type="date" id="data_nascimento_responsavel" name="data_nascimento_responsavel" required />
+
+        <label for="ocupacao">Ocupação</label>
+        <input type="text" id="ocupacao" name="ocupacao" required />
+
+        <label for="estado_civil_responsavel">Estado Civil</label>
+        <select id="estado_civil_responsavel" name="estado_civil_responsavel" required>
+          <option value="solteiro">Solteiro</option>
+          <option value="casado">Casado</option>
+          <option value="divorciado">Divorciado</option>
+          <option value="viuvo">Viúvo</option>
+        </select>
+
+        <label for="genero_responsavel">Gênero</label>
+        <select id="genero_responsavel" name="genero_responsavel" required>
+          <option value="masculino">Masculino</option>
+          <option value="feminino">Feminino</option>
+          <option value="outros">Outro</option>
+        </select>
+
+        <label for="telefone_responsavel">Telefone</label>
+        <input type="text" id="telefone_responsavel" name="telefone_responsavel" required />
+
+        <label for="email_responsavel">Email</label>
+        <input type="email" id="email_responsavel" name="email_responsavel" required />
+
+        <label for="observacao_responsavel">Observações</label>
+        <textarea id="observacao_responsavel" name="observacao_responsavel"></textarea>
+      </section>
+
+      <div class="actions wizard-actions">
+        <button type="button" class="btn-secondary" id="btnVoltar">
+          <i class="fa-solid fa-arrow-left"></i> Voltar
+        </button>
+
+        <button type="button" class="btn-primary" id="btnProximo">
+          Próximo <i class="fa-solid fa-arrow-right"></i>
+        </button>
+
+        <button type="submit" class="btn-primary" id="btnSalvar" hidden>
+          <i class="fa-solid fa-floppy-disk"></i> Salvar Cadastro
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <div class="fab" onclick="window.location.href='home.html'">
+    <i class="fas fa-home"></i>
+  </div>
+
+  <script src="/js/cadastro.js"></script>
+  <script>
+    // Máscaras de CPF e Telefone + UF/Cidade
+    document.addEventListener('DOMContentLoaded', () => {
+      const cpfInput = document.getElementById('cpf');
+      const telInput = document.getElementById('telefone_responsavel');
+      IMask(cpfInput, { mask: '000.000.000-00' });
+      IMask(telInput, { mask: '(00) 00000-0000' });
+
+      const ufSelect = document.getElementById('uf');
+      const cidadeSelect = document.getElementById('cidade');
+
+      const ufCidades = {
+        'AC': ['Rio Branco','Cruzeiro do Sul'],
+        'AL': ['Maceió','Arapiraca'],
+        'AP': ['Macapá','Santana'],
+        'AM': ['Manaus','Parintins'],
+        'BA': ['Salvador','Feira de Santana'],
+        'CE': ['Fortaleza','Juazeiro do Norte'],
+        'DF': ['Brasília'],
+        'ES': ['Vitória','Vila Velha'],
+        'GO': ['Goiânia','Anápolis'],
+        'MA': ['São Luís','Imperatriz'],
+        'MT': ['Cuiabá','Várzea Grande'],
+        'MS': ['Campo Grande','Dourados'],
+        'MG': ['Belo Horizonte','Uberlândia'],
+        'PA': ['Belém','Santarém'],
+        'PB': ['João Pessoa','Campina Grande'],
+        'PR': ['Curitiba','Londrina'],
+        'PE': ['Recife','Jaboatão'],
+        'PI': ['Teresina','Parnaíba'],
+        'RJ': ['Rio de Janeiro','Niterói'],
+        'RN': ['Natal','Mossoró'],
+        'RS': ['Porto Alegre','Caxias do Sul'],
+        'RO': ['Porto Velho','Ji-Paraná'],
+        'RR': ['Boa Vista','Rorainópolis'],
+        'SC': ['Florianópolis','Joinville'],
+        'SP': ['São Paulo','Campinas'],
+        'SE': ['Aracaju','Nossa Senhora do Socorro'],
+        'TO': ['Palmas','Araguaína']
+      };
+
+      Object.keys(ufCidades).forEach(uf => {
+        const opt = document.createElement('option');
+        opt.value = uf;
+        opt.textContent = uf;
+        ufSelect.appendChild(opt);
+      });
+
+      ufSelect.addEventListener('change', () => {
+        const cidades = ufCidades[ufSelect.value] || [];
+        cidadeSelect.innerHTML = '<option value="" disabled selected>Selecione a cidade</option>';
+        cidades.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c;
+          opt.textContent = c;
+          cidadeSelect.appendChild(opt);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

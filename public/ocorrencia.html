@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastrar Ocorrência</title>
+  <link rel="stylesheet" href="/css/ocorrencia.css">
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="icon-container" onclick="location.href='home.html'">
+      <img src="/imagens/inicial.png" alt="Tela Inicial" title="Tela Inicial" />
+    </div>
+    <div class="icon-container active" onclick="location.href='ocorrencia.html'">
+      <img src="/imagens/ocorrencia.png" alt="Cadastrar Ocorrência" title="Cadastrar Ocorrência" />
+    </div>
+    <div class="icon-container" onclick="location.href='relatorios.html'">
+      <img src="/imagens/report.png" alt="Relatórios" title="Relatórios" />
+    </div>
+    <!-- link de admin será injetado aqui via JS (antes do logout) -->
+    <div class="icon-container logout" onclick="location.href='login.html'">
+      <img src="/imagens/sair.png" alt="Sair" title="Sair" />
+    </div>
+  </aside>
+
+  <main class="container">
+    <h1>Cadastro de Ocorrência</h1>
+    <p class="form-subtitle">Preencha os dados abaixo para registrar uma nova ocorrência</p>
+
+    <form id="formOcorrencia">
+      <div class="form-grid">
+        <!-- trocado: agora seleciona a criança cadastrada -->
+        <div>
+          <label for="criancaId">Criança</label>
+          <select id="criancaId" class="input" required>
+            <option value="">Carregando crianças...</option>
+          </select>
+          <small class="help">A lista vem dos cadastros em Relatórios.</small>
+        </div>
+
+        <div>
+          <label for="data">Data da Ocorrência</label>
+          <input type="date" id="data" class="input" required>
+        </div>
+
+        <div>
+          <label for="tipo">Tipo de Ocorrência</label>
+          <select id="tipo" required>
+            <option value="">Selecione</option>
+            <option value="comportamento">Comportamento</option>
+            <option value="saude">Saúde</option>
+            <option value="ensino">Ensino</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="status">Status</label>
+          <select id="status" required>
+            <option value="pendente">Pendente</option>
+            <option value="andamento">Em Andamento</option>
+            <option value="resolvido">Resolvido</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" placeholder="Descreva os detalhes da ocorrência..." required></textarea>
+
+      <button type="submit" class="btn-primary">Salvar Ocorrência</button>
+    </form>
+
+    <p id="mensagem" class="help"></p>
+  </main>
+
+  <!-- atenção: o arquivo JS abaixo é /js/ocorrencia.js -->
+  <script src="/js/ocorrencia.js"></script>
+
+  <!-- injeta link do painel admin se for administrador -->
+  <script>
+    (function () {
+      try {
+        const auth = JSON.parse(localStorage.getItem('siatAuth') || '{}');
+        if (auth?.role === 'administrador') {
+          const sb = document.querySelector('.sidebar');
+          if (sb && !document.getElementById('adminLink')) {
+            const el = document.createElement('div');
+            el.className = 'icon-container';
+            el.id = 'adminLink';
+            el.title = 'Painel do Administrador';
+            el.onclick = () => location.href = 'adm.html';
+            const img = document.createElement('img');
+            img.src = '/imagens/usua.png'; // troque o ícone se quiser
+            img.alt = 'Admin';
+            el.appendChild(img);
+            const logout = sb.querySelector('.logout');
+            sb.insertBefore(el, logout || null);
+          }
+        }
+      } catch {}
+    })();
+  </script>
+</body>
+</html>
