@@ -1,33 +1,32 @@
-body {
+/* --- body e container --- */
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: 'Poppins', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   background-color: #f0f2f5;
 }
 
-button {
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-button:hover {
-  filter: brightness(90%);
-}
-
+/* Container centralizado */
 .container {
   display: flex;
   width: 80%;
   max-width: 1000px;
-  height: 600px;
+  min-height: 600px;
+  flex: 1; /* ocupa espaço disponível */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   overflow: hidden;
+  margin: 50px auto 100px auto; /* espaço inferior para rolagem e footer */
 }
 
+/* --- left-section --- */
 .left-section {
   width: 50%;
   background-image: url('../imagens/azul.jpg');
@@ -54,6 +53,7 @@ button:hover {
   font-size: 28px;
 }
 
+/* --- right-section --- */
 .right-section {
   width: 50%;
   background-color: rgba(255, 255, 255, 0.9);
@@ -72,12 +72,13 @@ button:hover {
 .right-section select,
 .right-section input {
   width: 100%;
-  padding: 12px;
+  padding: 12px 15px;
   margin-bottom: 15px;
   border: none;
   border-radius: 30px;
   background-color: #f0f2f5;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
 .password-container {
@@ -107,22 +108,11 @@ button:hover {
   background-color: #2980b9;
 }
 
-.forgot-password a {
-  color: #3498db;
-  text-decoration: none;
-  font-size: 14px;
-}
-
-.forgot-password a:hover {
-  text-decoration: underline;
-}
-
 .botao {
   display: inline-block;
   padding: 10px 20px;
   background-color: #3498db;
   color: white;
-  text-decoration: none;
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -133,3 +123,62 @@ button:hover {
 .botao:hover {
   background-color: #2980b9;
 }
+
+/* --- Rodapé --- */
+footer {
+  width: 100%;
+  background-color: #2980b9;
+  color: white;
+  padding: 30px 0;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around; /* mantém lado a lado */
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 20px;
+}
+
+.footer-section {
+  width: 300px; /* largura fixa para cada seção */
+  text-align: left; /* texto dentro da seção alinhado à esquerda */
+}
+
+.footer-section h3 {
+  margin-bottom: 10px;
+  font-size: 1.3em;
+}
+
+.footer-section p,
+.footer-section ul {
+  font-size: 0.95em;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.footer-section a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+  color: #ffdd57;
+}
+
+.footer-copy {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 20px;
+  padding-top: 10px;
+  font-size: 0.9em;
+  color: #dbe4f3;
+}
+
+
+
