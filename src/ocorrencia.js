@@ -88,8 +88,8 @@ router.get('/:id', async (req, res) => {
   res.json(rows[0]);
 });
 
-/* ===== POST (admin) ===== */
-router.post('/', requireAdmin, async (req, res) => {
+/* ===== POST (conselheiro e admin) ===== */
+router.post('/', async (req, res) => {
   const { crianca_id=null, nome, data, tipo, status, descricao } = req.body || {};
   if (!nome || !data || !tipo || !status || !descricao)
     return res.status(400).json({ error: 'Campos obrigatórios: nome, data, tipo, status, descricao' });
